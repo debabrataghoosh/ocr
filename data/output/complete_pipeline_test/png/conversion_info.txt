@@ -1,0 +1,6 @@
+PDF Source: data/input/daat12221.pdf
+DPI: 300
+Pages: 1
+Output Directory: data/output/complete_pipeline_test/png
+PNG Files:
+  - page_001.png

@@ -1,147 +1,229 @@
-# 📄 Document Parser: PDF to Excel Extractor
+# 📊 PDF Table Extractor with Advanced Image Processing
 
-![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+**Extract tables from PDF files using computer vision and cell-by-cell OCR for maximum accuracy.**
 
-A Python-based web application that intelligently extracts unstructured tabular data from PDF documents and converts it into a clean, structured Excel spreadsheet. This project is specifically tailored to parse complex employee punch-in/out records from a WMS report format.
+## 🎯 **What This System Does**
 
----
+This application extracts tables from PDF files using **advanced image processing techniques** and **individual cell OCR**. Unlike traditional PDF extraction methods, this system:
 
-## ## 🚀 Overview
+- ✅ **Detects table grids** using OpenCV morphological operations
+- ✅ **Identifies every cell** with precise coordinates using contours
+- ✅ **Performs OCR on individual cells** for maximum text accuracy
+- ✅ **Maintains table structure** by rebuilding from detected grid
+- ✅ **Works with scanned documents** and complex table layouts
 
-Many organizations generate reports as PDFs that contain valuable data in a format that is difficult to use for analysis. This tool solves that problem by providing a simple web interface to upload a PDF file, automatically parsing the content, and making the data available for download as a user-friendly Excel file.
+## 🚀 **Key Features**
 
-The core of this project is a robust parsing engine that can handle multi-line records and messy data layouts, which traditional table extraction tools often fail to process correctly.
+### **Advanced Image Processing**
+- **Grid Line Detection**: Uses OpenCV to find horizontal and vertical table lines
+- **Cell Identification**: Precise contour detection for every table cell
+- **Image Preparation**: Adaptive thresholding and line thickening for better detection
 
----
+### **Individual Cell OCR**
+- **Cell-by-Cell Processing**: Runs Tesseract on each cell individually
+- **Optimized PSM**: Uses PSM 7 (single line) for better accuracy
+- **Text Cleaning**: Intelligent cleaning and formatting of extracted text
 
-## ## ✨ Features
+### **Table Reconstruction**
+- **Position-Based Sorting**: Maintains correct row/column order
+- **Structure Preservation**: Rebuilds table with exact cell alignment
+- **Excel Export**: Professional formatting with borders and auto-sizing
 
-* **Simple Web Interface:** Built with Streamlit for an intuitive user experience.
-* **PDF Upload:** Easily upload multi-page PDF files directly from your browser.
-* **Intelligent Parsing:** The backend logic is designed to understand the specific, complex structure of the WMS punch record report.
-* **Data Structuring:** Converts the extracted raw text into a clean, labeled table format.
-* **Excel Export:** Download the structured data as an `.xlsx` file with a single click.
+## 📋 **Perfect For**
 
----
+- **Scanned PDF documents** with table structures
+- **Complex tables** with merged cells and borders
+- **Financial reports** and invoices
+- **Data tables** from printed documents
+- **Any document** where traditional PDF extraction fails
 
-## ##  Demo
+## 🛠️ **Installation**
 
-Here is a quick look at the application's user interface.
+### **Prerequisites**
+- Python 3.8+
+- Tesseract OCR (required for text extraction)
+- OpenCV (for image processing)
 
-
-
----
-
-## ## ⚙️ Tech Stack
-
-* **Backend:** Python
-* **Web Framework:** Streamlit
-* **PDF Processing:** PyMuPDF (`fitz`)
-* **Data Manipulation:** Pandas
-* **Excel Engine:** openpyxl
-
----
-
-## ## 📂 Project Structure
-
-The project is organized to separate the user interface from the core parsing logic, making it clean and scalable.
-
-```
-document-parser-project/
-├── 📂 data/
-│   ├── 📂 input/
-│   └── 📂 output/
-├── 📂 src/
-│   ├── __init__.py
-│   └── 📄 parser.py
-├── 📄 app.py
-├── 📄 requirements.txt
-└── 📄 README.md
-```
-
----
-
-## ## 🛠️ Setup and Installation
-
-Follow these steps to set up the project on your local machine.
-
-### ### 1. Clone the Repository
-
+### **Install Dependencies**
 ```bash
-git clone [https://github.com/your-username/document-parser-project.git](https://github.com/your-username/document-parser-project.git)
-cd document-parser-project
-```
+# Clone the repository
+git clone <repository-url>
+cd ocr
 
-### ### 2. Create a Virtual Environment (Recommended)
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-It's a best practice to create a virtual environment to manage project dependencies.
-
-* **Windows:**
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
-    ```
-* **macOS / Linux:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-
-### ### 3. Install Python Dependencies
-
-Install all the required libraries from the `requirements.txt` file.
-
-```bash
+# Install requirements
 pip install -r requirements.txt
 ```
 
+### **Install Tesseract OCR (Required)**
+```bash
+# macOS
+brew install tesseract
+
+# Ubuntu/Debian
+sudo apt-get install tesseract-ocr
+
+# Windows
+# Download from: https://github.com/UB-Mannheim/tesseract/wiki
+```
+
+## 🚀 **Usage**
+
+### **Web Interface (Recommended)**
+```bash
+streamlit run app.py
+```
+- Upload PDF files through the web interface
+- Automatic table detection and extraction
+- Download Excel files with proper table structure
+
+### **Command Line**
+```bash
+python demo_pdf_table_extractor.py
+```
+- Process PDFs from command line
+- View extraction results and statistics
+- Export to Excel with formatting
+
+## 🔍 **How It Works**
+
+### **Step 1: Image Preparation for Line Detection**
+1. **Load Image and Rotate**: Convert PDF to high-quality images
+2. **Convert to Grayscale**: Single-channel image for line detection
+3. **Apply Adaptive Thresholding**: Clean black-and-white image
+4. **Invert the Image**: Make lines white, background black
+5. **Thicken the Lines**: Use dilation to connect small breaks
+
+### **Step 2: Detect Horizontal and Vertical Grid Lines**
+1. **Isolate Horizontal Lines**: Morphological operations with horizontal kernel
+2. **Isolate Vertical Lines**: Morphological operations with vertical kernel
+3. **Combine Lines**: Form complete table grid
+
+### **Step 3: Identify Every Cell in the Grid**
+1. **Find Cell Contours**: Use OpenCV's findContours function
+2. **Sort the Contours**: Top-to-bottom, left-to-right ordering
+3. **Get Bounding Boxes**: Precise coordinates for each cell
+
+### **Step 4: Perform OCR on Each Cell Individually**
+1. **Loop Through Sorted Cells**: Process each cell by position
+2. **Crop the Cell**: Extract small cell area from original image
+3. **Run Tesseract**: Use PSM 7 for single line of text
+4. **Store the Text**: Organize results by table structure
+
+### **Step 5: Rebuild the Table and Save**
+1. **Create DataFrame**: Organize cell text by position
+2. **Apply Final Cleaning**: Clean and format extracted data
+3. **Export to Excel**: Maintain table structure and formatting
+
+## 📁 **Project Structure**
+
+```
+ocr/
+├── app.py                          # Main Streamlit application
+├── demo_pdf_table_extractor.py     # Command-line demo
+├── src/
+│   └── pdf_table_extractor.py     # Core extraction engine
+├── data/
+│   ├── input/                      # PDF input files
+│   └── output/                     # Excel output files
+│       ├── exel/                   # Excel files
+│       └── png/                    # Extracted images
+├── requirements.txt                # Python dependencies
+└── README.md                      # This file
+```
+
+## 🔧 **Configuration**
+
+### **Environment Variables**
+```bash
+# Enable debug logging
+export LOG_LEVEL=DEBUG
+
+# Set custom Tesseract path
+export TESSERACT_PATH=/usr/local/bin/tesseract
+```
+
+### **Processing Options**
+- **Page Selection**: Process specific pages or all pages
+- **Image Quality**: Adjust DPI for better OCR accuracy
+- **Line Detection**: Fine-tune morphological operation parameters
+
+## 📊 **Output Format**
+
+### **Excel Structure**
+- **Multiple Sheets**: One sheet per table
+- **Maintained Structure**: Same dimensions and layout as detected grid
+- **Professional Formatting**: Borders, cell alignment, and spacing
+- **Auto-sized Columns**: Optimal width for content readability
+
+### **Data Quality**
+- **Grid-Based Extraction**: Accurate cell boundaries and alignment
+- **Individual Cell OCR**: Maximum text accuracy per cell
+- **Structure Preservation**: Maintains detected table layout
+
+## 🚨 **Troubleshooting**
+
+### **Common Issues**
+
+#### **No Table Grid Detected**
+- PDF might not have clear table lines
+- Try adjusting image preprocessing parameters
+- Check if document has actual table structure
+
+#### **Poor OCR Accuracy**
+- Ensure high-quality image conversion (300+ DPI)
+- Check Tesseract installation and configuration
+- Verify image preprocessing quality
+
+#### **Incorrect Cell Detection**
+- Adjust morphological operation parameters
+- Check for complex table layouts
+- Verify line thickness and contrast
+
+### **Performance Tips**
+- **High DPI**: Use 300+ DPI for better OCR accuracy
+- **Page Selection**: Process specific pages for faster results
+- **Image Quality**: Ensure good contrast in original document
+
+## 🔮 **Advanced Features**
+
+### **Custom Grid Detection**
+- Modify morphological operation parameters
+- Add custom line detection algorithms
+- Implement industry-specific table recognition
+
+### **Batch Processing**
+- Process multiple PDFs automatically
+- Batch Excel export with consistent formatting
+- Integration with document management systems
+
+### **API Integration**
+- RESTful API for programmatic access
+- Integration with web applications
+- Automated document processing workflows
+
+## 🤝 **Contributing**
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 **Acknowledgments**
+
+- **OpenCV**: Computer vision and image processing
+- **Tesseract**: OCR capabilities for text extraction
+- **pdf2image**: PDF to image conversion
+- **Streamlit**: Web interface framework
+
 ---
 
-## ## ▶️ How to Run the Application
-
-Once the setup is complete, you can run the Streamlit application with a single command.
-
-1.  Make sure you are in the root directory of the project (`document-parser-project/`).
-2.  Run the following command in your terminal:
-
-    ```bash
-    streamlit run app.py
-    ```
-
-3.  Your web browser should automatically open a new tab with the application running. If not, open your browser and go to `http://localhost:8501`.
-
----
-
-## ## 📖 How to Use
-
-1.  **Launch the App:** Run the command above to start the local server.
-2.  **Upload a File:** Click the "Choose a PDF file" button and select the WMS punch record PDF.
-3.  **Parse the Document:** After uploading, click the "🚀 Parse File and Generate Excel" button.
-4.  **Download:** A preview of the extracted data will appear. Click the "📥 Download Excel File" button to save the result to your computer.
-
----
-
-## ## 💡 Future Improvements
-
-This project has a solid foundation, but here are some potential enhancements:
-
-* **Support for More File Types:** Add functionality to parse text from image files (`.png`, `.jpg`) using an OCR engine like Tesseract.
-* **Advanced Data Cleaning:** Implement more sophisticated rules to handle edge cases and potential OCR errors.
-* **Support for Different Templates:** Allow users to define parsing rules for different types of PDF layouts.
-* **Database Integration:** Add an option to save the extracted data directly to a database (like SQLite or PostgreSQL).
-* **Cloud Deployment:** Deploy the application to a cloud service like Streamlit Community Cloud or Heroku to make it publicly accessible.
-
----
-
-## ## 📝 License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
----
-
-## ## 📧 Contact
-
-**Debabrata Ghosh** - [LinkedIn](https://www.linkedin.com/in/debabrataghoosh/) - [GitHub](https://github.com/debabrataghoosh)
-
-Project Link: [https://github.com/debabrataghoosh/document-parser-project](https://github.com/debabrataghoosh/document-parser-project)
+**Built with ❤️ for advanced table extraction using computer vision**

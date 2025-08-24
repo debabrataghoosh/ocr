@@ -1,0 +1,12 @@
+Image: data/output/grid_data_final/png/page_001.png
+Total Sections: 5
+Grids Detected: 5
+
+Section Analysis:
+  Section 1: Grid detected (y=0-600)
+  Section 2: Grid detected (y=520-1120)
+  Section 3: Grid detected (y=1040-1640)
+  Section 4: Grid detected (y=1560-2160)
+  Section 5: Grid detected (y=2080-2550)
+
+Combined Grid: data/output/grid_detection_improved/04_combined_grid.png

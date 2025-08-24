@@ -1,0 +1,8 @@
+Image: data/input/image (3).png
+Total Sections: 1
+Grids Detected: 1
+
+Section Analysis:
+  Section 1: Grid detected (y=0-334)
+
+Combined Grid: data/output/image3_grid_detection/04_combined_grid.png
