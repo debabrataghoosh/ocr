@@ -3,18 +3,15 @@
 Configuration file for OCR settings
 """
 
-# Tesseract OCR Configuration
-TESSERACT_CONFIG = {
-    'language': 'eng',  # English language
-    'oem': '3',         # OCR Engine Mode: 3 = Default, based on what is available
-    'psm': '7',         # Page Segmentation Mode: 7 = Single text line
-    'timeout': 10,      # Timeout in seconds
-    'config_string': '--oem 3 --psm 7 -l eng'  # Full config string
-}
-
-# Fallback configuration (without language specification)
-TESSERACT_FALLBACK_CONFIG = {
-    'config_string': '--oem 3 --psm 7'
+# EasyOCR Configuration
+EASYOCR_CONFIG = {
+    'languages': ['en'],  # English language
+    'gpu': False,         # Use CPU for compatibility
+    'model_storage_directory': None,  # Use default model directory
+    'user_network_directory': None,   # Use default user network directory
+    'detail': 0,          # No detailed output (just text)
+    'paragraph': False,   # Single line mode
+    'batch_size': 1       # Process one image at a time
 }
 
 # Image Processing Configuration

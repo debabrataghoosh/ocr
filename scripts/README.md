@@ -45,7 +45,7 @@ python3 scripts/02_detect_table_grid.py page_001.png --output data/output/grid_d
 ---
 
 ### **3. `03_extract_text_from_cells.py` - Cell Identification and Text Extraction**
-**What it does:** Identifies table cells and extracts text using Tesseract OCR.
+**What it does:** Identifies table cells and extracts text using EasyOCR.
 
 **Usage:**
 ```bash

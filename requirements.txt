@@ -1,17 +1,22 @@
-# PDF Table Extractor with Advanced Image Processing and Line Detection
-# Core dependencies for image processing and OCR
-opencv-python>=4.8.0
-pytesseract>=0.3.10
-pdf2image>=1.16.0
-Pillow>=9.0.0
-
-# Data processing and export
+# Core dependencies for the unified OCR Table Extractor
+streamlit>=1.28.0
 pandas>=2.0.0
 openpyxl>=3.1.0
+Pillow>=9.0.0
+requests>=2.31.0
+
+# Image processing (if needed for PDF conversion)
+pdf2image>=1.16.0
+
+# Additional utilities
+python-dotenv>=1.0.0
+
+# PDF & basic image handling
+PyMuPDF>=1.24.0
 numpy>=1.24.0
 
-# Web interface (optional)
-streamlit>=1.28.0
+# Optional (uncomment if you still want local grid visualization)
+# opencv-python-headless>=4.9.0.80
 
-# PDF processing
-PyMuPDF>=1.23.0
+# Removed: easyocr, pytesseract (Gemini-only extraction path)
+# Removed: tqdm, regex (not required for core Gemini flow)
