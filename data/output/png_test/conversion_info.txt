@@ -1,6 +1,0 @@
-PDF Source: data/input/daat12221.pdf
-DPI: 300
-Pages: 1
-Output Directory: data/output/png_test
-PNG Files:
-  - page_001.png

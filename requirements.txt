@@ -1,5 +1,4 @@
-# Core dependencies for the unified OCR Table Extractor
-streamlit>=1.28.0
+# Core dependencies for the interactive OCR Table Extractor
 pandas>=2.0.0
 openpyxl>=3.1.0
 Pillow>=9.0.0
@@ -14,6 +13,9 @@ python-dotenv>=1.0.0
 # PDF & basic image handling
 PyMuPDF>=1.24.0
 numpy>=1.24.0
+
+# Google Gemini API
+google-generativeai>=0.3.0
 
 # Optional (uncomment if you still want local grid visualization)
 # opencv-python-headless>=4.9.0.80

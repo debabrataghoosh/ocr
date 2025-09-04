@@ -1,19 +1,19 @@
 # 🚀 ExtractX OCR Extraction
 
-**Professional table extraction using Google Gemini API with complete pipeline automation**
+**Professional table extraction using Google Gemini API with interactive CLI**
 
 ## 🌟 **Features**
 
 - **📁 Multi-format Support**: PDF, PNG, JPG, JPEG with multi-page processing
 - **🤖 AI-Powered Extraction**: Google Gemini API for 98%+ accuracy
 - **🔄 Complete Pipeline**: Unified PDF→PNG→Gemini→Excel workflow
-- **📊 Multiple Export Formats**: Excel (.xlsx), CSV (.csv), JSON (.json)
-- **🎨 Beautiful Web UI**: Modern Streamlit interface with batch processing
-- **⚡ CLI Automation**: Command-line pipeline for batch operations
+- **📊 Multiple Export Formats**: Excel (.xlsx), CSV (.csv)
+- **🎯 Interactive CLI**: User-guided interface with step-by-step prompts
+- **⚡ Smart Processing**: Page range selection and rotation controls
 - **🛡️ Robust Error Handling**: Retry logic with exponential backoff
 - **🔧 Smart Table Merging**: Intelligent column alignment across pages
-- **📱 Responsive Design**: Works on desktop and mobile devices
 - **💾 Secure API Management**: Environment variable protection
+- **📖 Multi-page Consolidation**: Combine multiple pages into single output files
 
 ## 🏗️ **Architecture**
 
@@ -26,28 +26,22 @@
 
 ## 🚀 **Quick Start**
 
-### **Web Interface**
+### **Interactive Pipeline**
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Run Streamlit app
-streamlit run streamlit_app.py
+# Run interactive pipeline
+python scripts/ExtractX_OCR.py
 ```
 
-### **Command Line Pipeline**
+### **Demo Simulation**
 ```bash
-# Basic usage
-python scripts/complete_pipeline.py input.pdf --output results/
-
-# Advanced options
-python scripts/complete_pipeline.py input.pdf \
-  --max-pages 5 \
-  --rotation 90 \
-  --output results/
+# See how the interactive pipeline works
+python demo_interactive.py
 ```
 
-### **� API Configuration**
+### **🔑 API Configuration**
 1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. Create a new API key
 3. Create a `.env` file in project root:
@@ -55,90 +49,95 @@ python scripts/complete_pipeline.py input.pdf \
 GEMINI_API_KEY=your_key_here
 ```
 
-## �📁 **Project Structure**
+## 📁 **Project Structure**
 
 ```
 ocr/
-├── 📁 streamlit_app.py             # Web interface with batch processing
 ├── 📁 scripts/
-│   ├── complete_pipeline.py       # 🆕 Unified pipeline (PDF→PNG→Gemini→Excel)
-│   ├── 01_pdf_to_png.py          # PDF conversion with orientation
-│   ├── 03_extract_text_with_gemini.py  # Gemini API extraction
-│   └── 04_create_excel_from_gemini.py  # Professional Excel formatting
+│   └── ExtractX_OCR.py             # 🆕 Interactive OCR Pipeline
+├── 📁 demo_interactive.py          # Interactive demo simulation
 ├── 📁 requirements.txt             # Streamlined dependencies (Gemini-only)
 ├── 📁 .env                        # API key configuration (git-ignored)
-├── 📁 data/                       # Input/output management
-│   ├── input/                     # Source files
-│   └── output/                    # Generated results
-└── 📁 docs/                       # Project documentation
-    ├── PROJECT_STRUCTURE.md       # Detailed structure
-    └── CLEANUP_SUMMARY.md         # Development history
+└── 📁 data/                       # Input/output management
+    ├── input/                     # Source files
+    └── output/                    # Generated results
+```
 ```
 
 ## 🎯 **How It Works**
 
-### **Step 1: File Upload**
-- Supports PDF and image files
+### **Step 1: File Selection**
+- Interactive file browsing (manual path, current dir, data/input)
 - Automatic file validation
-- Real-time file information display
+- Support for PDF and image files
 
-### **Step 2: AI Processing**
-- Uses Google Gemini API for table recognition
-- Intelligent text extraction
-- Structured data organization
+### **Step 2: Page Configuration (PDF only)**
+- Automatic page count detection
+- User selects page range (all, specific range, first N pages)
+- Page validation and confirmation
 
-### **Step 3: Excel Creation**
-- Professional formatting
-- Auto-adjusted column widths
-- Clean headers and borders
+### **Step 3: Processing Options**
+- Rotation selection (0°, 90°, 180°, 270°)
+- Output format choice (Excel, CSV, or both)
+- Output directory selection
 
-### **Step 4: Download**
-- Excel file download
-- JSON data backup
-- Timestamped filenames
+### **Step 4: AI Processing**
+- PDF to PNG conversion with rotation
+- Google Gemini API table recognition
+- Intelligent text extraction and structuring
 
-## 🔧 **Configuration**
+### **Step 5: Export & Results**
+- Multi-page table consolidation
+- Professional Excel formatting
+- CSV export for compatibility
+- Timestamped output files
 
-### **Environment Variables**
-Preferred: use a `.env` file (auto-loaded via python-dotenv) or set in shell.
-```bash
-export GEMINI_API_KEY="your_api_key_here"  # shell method
+## 🔧 **Interactive Features**
+
+### **File Selection Options**
 ```
-Sidebar options:
-- Upload `.env` file (parsed for GEMINI_API_KEY)
-- Manual override input (masked)
+📁 Select input file:
+1. Enter file path manually
+2. Browse current directory  
+3. Browse data/input directory
+```
 
-### **API Key Security**
-- API keys are stored securely in session state
-- Never logged or stored permanently
-- Input is masked for security
+### **Page Range Selection**
+```
+📄 Page Selection (Total: 5 pages):
+1. Process all pages
+2. Process specific page range (e.g., 1-5)
+3. Process first N pages
+```
+
+### **Rotation Controls**
+```
+🔄 Rotation Options:
+1. No rotation (0°)
+2. Rotate 90° clockwise
+3. Rotate 180°
+4. Rotate 270° clockwise
+```
+
+### **Output Format Selection**
+```
+💾 Output Format Options:
+1. Excel (.xlsx)
+2. CSV (.csv)
+3. Both Excel and CSV
+```
 
 ## 📊 **Supported Formats**
 
 ### **Input Files**
-- ✅ **PDF**: Multi-page documents
+- ✅ **PDF**: Multi-page documents with page range selection
 - ✅ **PNG**: High-quality images
 - ✅ **JPG/JPEG**: Standard image formats
 
 ### **Output Files**
-- ✅ **Excel (.xlsx)**: Professional formatting
-- ✅ **JSON**: Raw data backup
-- ✅ **CSV**: Optional export
-
-## 🚀 **Advanced Usage**
-
-### **Command Line Interface**
-```bash
-# Run individual scripts
-python3 scripts/01_pdf_to_png.py "input.pdf"
-python3 scripts/03_extract_text_with_gemini.py "image.png" --api-key "KEY"
-python3 scripts/04_create_excel_from_gemini.py "data.json"
-```
-
-### **Complete Pipeline**
-```bash
-python3 scripts/run_complete_pipeline.py "input.pdf" --api-key "KEY"
-```
+- ✅ **Excel (.xlsx)**: Professional formatting with auto-width columns
+- ✅ **CSV (.csv)**: Universal compatibility format
+- ✅ **Multi-page consolidation**: All pages combined into single output
 
 ## 🔍 **Troubleshooting**
 
@@ -149,9 +148,9 @@ python3 scripts/run_complete_pipeline.py "input.pdf" --api-key "KEY"
 - Check API key permissions and quotas
 - Ensure internet connectivity
 
-**File Upload Issues**
+**File Processing Issues**
 - Check file format compatibility
-- Verify file size (max 200MB)
+- Verify file size limitations
 - Ensure file is not corrupted
 
 **Processing Errors**
@@ -166,12 +165,12 @@ python3 scripts/run_complete_pipeline.py "input.pdf" --api-key "KEY"
 
 ## 🎨 **Customization**
 
-### **Styling**
-- Modify CSS in `streamlit_app.py`
-- Customize color schemes
-- Adjust layout and spacing
+### **Pipeline Configuration**
+- Modify processing parameters in `complete_pipeline.py`
+- Customize DPI settings for PDF conversion
+- Adjust retry logic and timeout values
 
-### **Functionality**
+### **Functionality Extensions**
 - Add new file format support
 - Implement custom processing logic
 - Extend export options
@@ -180,39 +179,16 @@ python3 scripts/run_complete_pipeline.py "input.pdf" --api-key "KEY"
 
 - **Processing Speed**: 10-30 seconds per image
 - **Accuracy**: 95%+ with clear images
-- **File Size Support**: Up to 200MB
-- **Concurrent Users**: Unlimited
+- **File Size Support**: Limited by Gemini API
+- **Interactive Experience**: Step-by-step guided process
+- **Multi-page Support**: Unlimited pages with smart consolidation
 
 ## 🔒 **Security Features**
 
-- **API Key Protection**: Secure input handling
+- **API Key Protection**: Environment variable storage
 - **File Validation**: Type and size checking
-- **Session Management**: Secure data handling
 - **Error Handling**: Safe error messages
-
-## 🌐 **Deployment**
-
-### **Local Development**
-```bash
-streamlit run streamlit_app.py --server.port 8501
-```
-
-### **Production Deployment**
-```bash
-# Using Streamlit Cloud
-git push origin main
-
-# Using Docker
-docker build -t ocr-extractor .
-docker run -p 8501:8501 ocr-extractor
-```
-
-### **Environment Variables**
-```bash
-# Production settings
-export STREAMLIT_SERVER_PORT=8501
-export STREAMLIT_SERVER_ADDRESS=0.0.0.0
-```
+- **No Data Storage**: Temporary processing only
 
 ## 🤝 **Contributing**
 
@@ -229,18 +205,19 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🙏 **Acknowledgments**
 
 - **Google Gemini API** for AI-powered text extraction
-- **Streamlit** for the beautiful web interface
+- **Interactive CLI** for user-friendly experience
 - **Pandas & OpenPyXL** for Excel processing
-- **Pillow** for image handling
+- **PyMuPDF** for PDF handling
+- **Pillow** for image processing
 
 ## 📞 **Support**
 
 - **Issues**: Create a GitHub issue
-- **Documentation**: Check PROJECT_STRUCTURE.md
+- **Documentation**: Check INTERACTIVE_IMPLEMENTATION.md
 - **Community**: Join our discussions
 
 ---
 
-**🚀 Built with ❤️ using Streamlit & Google Gemini API**
+**🚀 Built with ❤️ using Interactive CLI & Google Gemini API**
 
 **📊 Professional Table Extraction Made Simple**
